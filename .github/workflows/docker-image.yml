@@ -12,6 +12,7 @@ jobs:
     - uses: actions/checkout@main
     - name: Publish to Registry
       uses: HurricanKai/Publish-Docker-Github-Action@master
+      if: contains(github.ref, 'refs/tags/v')
       with:
         name: undeadops/githoney 
         username: ${{ secrets.DOCKER_USERNAME }}
