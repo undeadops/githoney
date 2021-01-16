@@ -22,6 +22,7 @@ type Config struct {
 	Port            string
 	HoneycombApiKey string
 	GitlabAuthToken string
+	HoneyDataSet    string
 	HoneyEvent      *libhoney.Builder
 }
 
@@ -32,6 +33,7 @@ func loggingMiddleware(next http.Handler) http.Handler {
 func main() {
 	var config Config
 	config.HoneycombApiKey = os.Getenv("HONEYCOMB_API_KEY")
+	config.HoneyDataSet = os.Getenv("HONEYCOMB_DATASET")
 	config.Port = os.Getenv("PORT")
 	config.GitlabAuthToken = os.Getenv("GITLAB_AUTH_TOKEN")
 
@@ -39,11 +41,15 @@ func main() {
 		config.Port = "5000"
 	}
 
+	if config.HoneyDataSet == "" {
+		config.HoneyDataSet = "gitlab"
+	}
+
 	// basic initialization for honeycomb
 	libhConf := libhoney.Config{
 		// TODO change to use APIKey
 		WriteKey: config.HoneycombApiKey,
-		Dataset:  "gitlab",
+		Dataset:  config.HoneyDataSet,
 		Logger:   &libhoney.DefaultLogger{},
 	}
 	libhoney.Init(libhConf)
