@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag undeadops/githoney:${{steps.vars.outputs.tag}}
     - name: Publish to Registry
       uses: HurricanKai/Publish-Docker-Github-Action@master
       with:
