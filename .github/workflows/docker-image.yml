@@ -1,9 +1,9 @@
 on:
-  name: Go Build, Test and Push
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+name: Github CI Actions
 jobs:
   build:
     name: build
